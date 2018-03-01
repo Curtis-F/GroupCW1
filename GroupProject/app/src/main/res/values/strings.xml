@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Group Project</string>
+    <string name="sign_in">Sign in with Google</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="view_profile">View Profile</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_target">TargetActivity</string>
+    <string name="title_activity_groups">GroupsActivity</string>
+    <string name="title_activity_create_activity">CreateActivityActivity</string>
+    <string name="create_activity">Create a new activity:</string>
+    <string name="activity_name">Activity Name:</string>
+    <string name="dot_dot_dot">...</string>
+    <string name="target">Target:</string>
+    <string name="units">Units:</string>
+    <string name="genre">Genre:</string>
+    <string name="base_target">Base Target:</string>
+    <string name="stretch_target">Stretch Target:</string>
+    <string name="create">Create</string>
+    <string name="title_activity_create_group">CreateGroupActivity</string>
+    <string name="create_group">Create a new group:</string>
+    <string name="group_name">Group Name:</string>
+    <string name="activity">Activity:</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="profile">Your Profile:</string>
+    <string name="profile_picture">User profile picture.</string>
+    <string name="change_picture">Edit Photo</string>
+    <string name="name">Name:</string>
+    <string name="delete">Delete Account</string>
+    <string name="save">Save</string>
+    <string name="birth">Date of Birth</string>
+    <string name="new_date_button">Pick a Date...</string>
+    <string name="badges">Badges:</string>
+</resources>
