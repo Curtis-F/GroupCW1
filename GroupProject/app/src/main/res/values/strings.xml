@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Group Project</string>
+    <string name="app_name">Bullseye</string>
     <string name="sign_in">Sign in with Google</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="view_profile">View Profile</string>
@@ -30,4 +30,15 @@
     <string name="birth">Date of Birth</string>
     <string name="new_date_button">Pick a Date...</string>
     <string name="badges">Badges:</string>
+    <string name="community_activity_join">Join</string>
+    <string name="default_progress_ammount">0</string>
+    <string name="update_progress">Update</string>
+    <string name="update_text">Add your progress here:</string>
+    <string name="edit_text_progress">Edit your target.</string>
+    <string name="cancel">Cancel</string>
+    <string name="createActivity">Create and Join an Activity</string>
+    <string name="my_activities_add_group">Create a Group</string>
+    <string name="add_member">Add User</string>
+    <string name="leave_group">Leave Group</string>
+
 </resources>

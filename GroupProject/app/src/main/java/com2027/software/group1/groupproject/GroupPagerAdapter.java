@@ -19,7 +19,7 @@ public class GroupPagerAdapter extends FragmentStatePagerAdapter
     public Fragment getItem(int position) {
         if(position == 0) {
 
-            return new ProgressFragment();
+            return new GroupProgressFragment();
         }
         else if (position == 1) {
             return new ChatFragment();

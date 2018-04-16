@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".CreateActivityActivity"
-    tools:showIn="@layout/activity_create_activity"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create_activity" android:textStyle="bold" android:textSize="@dimen/create_new"
-        android:gravity="center"/>
-
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/dot_dot_dot"
                     android:layout_weight="4"
-                    android:id="@+id/edit_new_name"/>
+                    android:id="@+id/group_name"/>
 
 
             </LinearLayout>
@@ -54,14 +41,10 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/activity"/>
-                <Spinner
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:id="@+id/spinner_activities"
-                    >
-
-                </Spinner>
+                    android:id="@+id/activity_name"/>
 
 
             </LinearLayout>
@@ -107,19 +90,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"
-        android:gravity="center|bottom">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/create"
-            android:id="@+id/create"/>
-
-    </LinearLayout>
 
 </LinearLayout>

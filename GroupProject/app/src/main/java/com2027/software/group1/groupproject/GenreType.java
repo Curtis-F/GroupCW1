@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum GenreType {
-    SPORTS("Sports"), LEISURE("Leisure"), FITNESS("Fitness"), HABITS("Habits"), WORK("Work"), HOME("Home");
+    LEISURE("Leisure"), FITNESS("Fitness"), HABITS("Habits"), WORK("Work"), HOME("Home");
 
     private String FriendlyName;
 

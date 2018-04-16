@@ -19,7 +19,7 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter
     public Fragment getItem(int position) {
         if(position == 0) {
 
-            return new MyActivitiesFragment();
+            return new MyTargetsFragment();
         }
         else if (position == 1) {
             return new CommunityActivitiesFragment();

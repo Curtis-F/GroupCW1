@@ -4,53 +4,36 @@ import java.io.Serializable;
 
 public class ActivityItem implements Serializable {
 
+    private String key = "";
+
     private String Name = "";
 
-    private TargetType Target = null;
+    private String Unit = null;
 
-    private UnitType Unit = null;
+    private String Genre = null;
 
-    private GenreType Genre = null;
-
-    private int BaseTarget = 0;
-
-    private int StretchTarget = 0;
+    public String getKey() { return key; }
 
     public String getName() { return Name; }
 
-    public TargetType getTarget() {
-        return Target;
-    }
-
-    public UnitType getUnit() {
+    public String getUnit() {
         return Unit;
     }
 
-    public GenreType getGenre() {
+    public String getGenre() {
         return Genre;
     }
-
-    public int getBaseTarget() {
-        return BaseTarget;
-    }
-
-    public int getStretchTarget() {
-        return StretchTarget;
-    }
-
 
     @Override
     public String toString() {
         return this.Name;
     }
 
-    public ActivityItem(String name, TargetType target, UnitType unit, GenreType genre, int baseTarget, int stretchTarget)
+    public ActivityItem(String key, String name, String unit, String genre)
     {
+        this.key = key;
         this.Name = name;
-        this.Target = target;
         this.Unit = unit;
         this.Genre = genre;
-        this.BaseTarget = baseTarget;
-        this.StretchTarget = stretchTarget;
     }
 }

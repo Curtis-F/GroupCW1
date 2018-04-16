@@ -1,10 +1,7 @@
 package com2027.software.group1.groupproject;
 
+import android.content.Context;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,62 +9,58 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 
+public class MyTargetsListAdapter extends ArrayAdapter<TargetItem> {
+    private ArrayList<TargetItem> targets = null;
 
-public class CommunityActivitiesFragment extends Fragment {
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.content_community_activities_fragment, container, false);
+    public MyTargetsListAdapter(Context context, ArrayList<TargetItem> targets)
+    {
+        super(context, R.layout.my_activities_list_item_layout ,targets);
+        this.targets = targets;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View row = inflater.inflate(R.layout.my_activities_list_item_layout, parent, false);
 
-        ListView listView = (ListView) getView().findViewById(R.id.community_list_view);
-        listView.setAdapter(((HomeActivity)getActivity()).getCommunityActivitiesListAdapter());
+        TextView textView = (TextView) row.findViewById(R.id.my_activities_name);
+        textView.setText(targets.get(position).getName());
 
-        Button createActivity = (Button) getView().findViewById(R.id.createActivity);
-        createActivity.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button) row.findViewById(R.id.my_activities_add_group);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HomeActivity homeActivity = (HomeActivity) getActivity();
+                HomeActivity homeActivity = (HomeActivity) getContext();
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(homeActivity);
                 LayoutInflater layoutInflater = homeActivity.getLayoutInflater();
-                final View dialogView = layoutInflater.inflate(R.layout.dialog_create_activity, null);
+                final View dialogView = layoutInflater.inflate(R.layout.dialog_create_group, null);
                 dialogBuilder.setView(dialogView);
 
                 final EditText base = (EditText) dialogView.findViewById(R.id.edit_base_target);
+                base.setText("0");
 
                 final EditText stretch = (EditText) dialogView.findViewById(R.id.edit_stretch_target);
+                stretch.setText("0");
 
-                final EditText name = (EditText) dialogView.findViewById(R.id.edit_new_name);
+                TextView activityName = (TextView) dialogView.findViewById(R.id.activity_name);
+                activityName.setText(targets.get(position).getName());
 
-                final Spinner units = (Spinner) dialogView.findViewById(R.id.spinner_units);
+                final EditText name = (EditText) dialogView.findViewById(R.id.group_name);
 
-                units.setAdapter(new ArrayAdapter<>(homeActivity, android.R.layout.simple_spinner_item, UnitType.values()));
-
-                final Spinner genre = (Spinner) dialogView.findViewById(R.id.spinner_genre);
-
-                genre.setAdapter(new ArrayAdapter<>(homeActivity, android.R.layout.simple_spinner_item, GenreType.values()));
-
-
-                dialogBuilder.setTitle("Create your activity and Targets:");
+                dialogBuilder.setTitle("Set your Group's name:");
                 dialogBuilder.setPositiveButton("Save", null);
-                dialogBuilder.setNegativeButton("Cancel",null);
+                dialogBuilder.setNegativeButton("Cancel", null);
 
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -80,20 +73,24 @@ public class CommunityActivitiesFragment extends Fragment {
                                 if(!name.getText().toString().isEmpty()) {
                                     if (!base.getText().toString().isEmpty() && Integer.parseInt(base.getText().toString()) > 0 && !stretch.getText().toString().isEmpty() && Integer.parseInt(stretch.getText().toString()) > 0) {
                                         if (Integer.parseInt(base.getText().toString()) < Integer.parseInt(stretch.getText().toString())) {
-                                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                            FirebaseAuth auth= FirebaseAuth.getInstance();
+
+                                            FirebaseAuth auth = FirebaseAuth.getInstance();
                                             FirebaseUser user = auth.getCurrentUser();
-
-                                            DatabaseReference ref = mDatabase.child("/Activities");
+                                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                                            DatabaseReference ref = mDatabase.child("/groups");
                                             String key = ref.push().getKey();
-                                            ActivityItem activityItem = new ActivityItem(key, name.getText().toString(), units.getSelectedItem().toString(), genre.getSelectedItem().toString());
-                                            ref.child(key).setValue(activityItem);
-
-                                            ref = mDatabase.child("/users").child(user.getUid()).child("Targets");
+                                            ArrayList<String> userKeys = new ArrayList<String>();
+                                            userKeys.add(user.getUid());
+                                            GroupItem groupItem = new GroupItem(key, name.getText().toString(), targets.get(position).getActivity_key(), targets.get(position).getName(), targets.get(position).getUnit(), targets.get(position).getGenre(), Integer.parseInt(base.getText().toString()), Integer.parseInt(stretch.getText().toString()), userKeys);
+                                            ref.child(key).setValue(groupItem);
+                                            ref = mDatabase.child("users").child(user.getUid()).child("groupKeys");
                                             key = ref.push().getKey();
-                                            TargetItem targetItem = new TargetItem(key, activityItem.getKey(), activityItem.getName(), activityItem.getUnit(), activityItem.getGenre(), Integer.parseInt(base.getText().toString()), Integer.parseInt(stretch.getText().toString()));
-                                            ref.child(key).setValue(targetItem);
+                                            ref.child(key).setValue(groupItem.getKey());
+                                            ref = mDatabase.child("users").child(user.getUid()).child("Targets").child(targets.get(position).getKey()).child("groupKeys");
+                                            key = ref.push().getKey();
+                                            ref.child(key).setValue(groupItem.getKey());
                                             alertDialog.dismiss();
+
                                         } else {
                                             Toast.makeText(getContext(), "Stretch target must be higher than Base target.", Toast.LENGTH_SHORT).show();
                                         }
@@ -103,7 +100,7 @@ public class CommunityActivitiesFragment extends Fragment {
                                 }
                                 else
                                 {
-                                    Toast.makeText(getContext(), "Please enter a name for the activity.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "Please enter a name for the group.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -120,5 +117,6 @@ public class CommunityActivitiesFragment extends Fragment {
             }
         });
 
+        return row;
     }
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum UnitType {
     HOURS("Hours"),KILOMETERS("Kilometers"), MILES("Miles"),
-        STONES("Stones/Pounds"), KILOGRAMS("Kilograms"), NUMBER("None");
+        STONES("Stones"), KILOGRAMS("Kilograms"), NUMBER("None");
 
 
     private String FriendlyName;
